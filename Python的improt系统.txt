@@ -1,12 +1,12 @@
-Python的improt系统
+Python的import系统
 2018-09-04
 疑问点用？标记！
 
-一、improt
+一、import
 查找顺序：系统中已加载模块（？） --> py文件所在的目录 --> 内置模块
 --> sys.path包含的模块（按路径先后顺序查找）
 
-二、from improt
+二、from import
 注意：命名空间问题，涉及到变量覆盖的问题。
 应尽量避免使用from引入。
 或者规范使用from。
