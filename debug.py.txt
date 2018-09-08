@@ -1,0 +1,101 @@
+#debug.py.txt
+#错误处理
+#Log 2018-09-08
+疑问：见第60行：记录错误信息 中的内容
+
+实验错误
+	print
+		语句前验证
+	断言
+		预计后验证
+		抛出异常，没有捕获的话，中断。
+	都是定位大概位置
+
+捕获错误
+	try中的except
+	同样也是错误处理流程的方法。
+
+抛出错误（制造错误）
+	像是验证输入是否符合要求的时候，可以使用。
+	或者定义类的时候。
+
+处理错误
+	try:
+	except 错误类型 as e:
+		print(e) #这算是捕获了吗？
+	finally:
+抛出错误
+	raise
+	自定义错误
+	程序出错后，这个错误会向外一层一层抛出，直到Py解释器。
+捕获错误
+	怎么捕获？
+	try中的except算是捕获吗？
+		except就算是捕获的一种方式：
+			出错后，程序会跳转到这个语句，并把错误传递给它。
+			然后就可以写下一步怎么办？是return错误推出？还是尝试执行其他代码？
+		应该写下面三个语句的区别
+				return
+				break
+				continue
+	不捕获的话程序就会中断。
+
+调用栈：调用函数栈
+错误栈：
+	异常信息举例
+	$ python3 err.py
+	Traceback (most recent call last):
+  		File "err.py", line 11, in <module>
+    		main()
+  		File "err.py", line 9, in main
+    		bar('0')
+  		File "err.py", line 6, in bar
+    		return foo(s) * 2
+  		File "err.py", line 3, in foo
+    		return 10 / int(s)
+	ZeroDivisionError: division by zero
+	zero这个是错误类型
+向上抛出知道解释器捕获
+
+记录错误信息
+	logging模块
+	？配合try使用，出错后logging记录错误，但程序仍可正常执行完毕。
+	？那么不加logging，使用try捕获后，还会执行下去吗？为什么？
+
+调试
+	嵌入调试语句和IDE
+
+代替print的几种方法
+断言
+	assert 成立时不显示错误信息（不成立时显示错误信息）, '错误信息'
+	assert True 'Err'
+	执行后不显示
+	assert False 'Err'
+	显示 Err
+	抛异常，终止
+
+	python -o 可以关闭显示 断言信息。
+	不显示垃圾信息哈。
+logging模块
+	控制捕捉的错误级别
+	输出到文件还是控制台
+pdb
+	python内置调试器
+	python -m pdb *.py
+	单步运行
+
+IDE
+	Visual Studio Code
+		需要Python插件
+	PyCharm
+	Eclipse 加pydev插件
+
+测试自动化
+单元测试
+	unittest 模块
+	什么是单元测试？
+		设定一系列条件，并编写代码测试代码，自动根据设定的条件进行测试。
+文档测试
+	在注释中，根据一定的格式 写出输入 与希望的输出，然后python读取注释，自动调试。
+	牛逼闪闪放光芒啊。
+	doctest 模块
