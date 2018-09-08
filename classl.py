@@ -19,15 +19,79 @@ class abc1(object): #*1
 	_a = None
 	_b = None #*2
 	
-	__inonly = 'hello'
+	__inclassonly = 'hello'
+	'''
+	变量名称前加两个下划线 __ 表示该变量为私有变量。
+	P.s 在类内，应成为属性。
+	'''
 
 	def __init__(self, d, e, f): #*3
 		self.d = d
 		self.e = e
+		#实例的属性
+		
 		self.__inattonly = f
+		#实例的私有属性
+		#
+		'''
+		1、可以在实例化过程中赋值。
+			__init__接受，注意参数位置和个数的对应。
+		2、只声明不赋值。
+		3、以上两种方法都可以通过@property 便捷访问
+		'''
+	
+	#self是啥？
+	'''
+		self指向类或者实例本身，也就是指向自己，或者说表示自己。
+	'''
+	
+	#类的两种状态：类和实例
+	'''
+		类：
+			Python动态编译：
+				type(类名字)的时候，返回的是<type 'type'>。
+				实例化后：type(实例名),返回的是<type '类名字'atxxx>
+				也就是说，类在实例化之前，没有在内存中编译成可执行的码。
+				具体看解释：
+			类可以实例成不同的实例。
+				a = class_1()
+				b = class_1()
+				但，a 和 b 不同。
+		实例：
+		属性和方法的对应：
+		__init__ 定义的属性为实例属性
+			只有实例化话方可访问。
+			只有实例自己可以访问：a不能访问b中的属性。
+	'''
+	
+	#操私有属性的方法（1）
+	#常规操作
+	#实例、类私有属性均可。
+	def setinonly(self, gg):
+		self.__inclassonly = gg
+
 	def getinonly(self):
 		print(self.__inattonly)
-		print(self.__inonly)
+		print(self.__inclassonly)
+
+	#操作私有属性的方法（2）
+	#			——— @property @XX.setter 优雅地操作
+	@property
+	#私有属性 __inattonly 无需事先声明
+	#不再 __init__ 声明的私有属性，为类的私有属性
+	#（名称作用空间）
+	def inattonly(self):
+		return self.__inattonly
+	@inattonly.setter
+	def inattonly(self, dd):
+		self.__inattonly = dd
+
+	'''
+	*属性封装
+	私有属性、操作的方法，巧合
+	1、控制。
+	'''
+	
 
 	'''
 	1、
@@ -44,11 +108,14 @@ def abc2():
 	print('lalal')
 
 #debug
-f = abc1('str', 1, 100)
+#f = abc1('str', 1)
+#f.getinonly()
 #print(f.d, f.e)
 #print(type(f))
-#print(abc1.__inonly)
-print(abc1.getinonly()) #
+f = abc1('str', 1, 88)
+f.inattonly = 99
+#print(abc1.inattonly)
+print(f.inattonly) #
 
 
 #尾部注记
@@ -90,6 +157,12 @@ print(abc1.getinonly()) #
 		不太理解
 	6、与静态语言的区分？
 		完全不懂
+	7、动态
+		实例动态设置属性
+		__slots__ 限制实例动态设置属性
+		__slots__ = (tuple)
+	8、self指向实例本身，class 模版的 一个组成部分
+
 2、类的属性
 	类本身和它所有的子类都可以使用这个属性。
 	？！没有实例化的情况下可以访问吗？
@@ -129,11 +202,19 @@ print(abc1.getinonly()) #
 5、方法
 	os.walk这样有返回值
 	和调用函数一样。
-阅读到：
-2018-09-06
-OOP高级编程
-使用__slots__
-@property完全不懂
+
+高级对象编程
+类的装饰器
+	@property
+	#读取值的函数
+	@读取值的函数名.setter
+	#获取值的函数
+	成对出现，操作私有属性。
+
+定制类
+枚举类
+元类
+
 
 
 '''
